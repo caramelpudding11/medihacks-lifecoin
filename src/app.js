@@ -1,4 +1,4 @@
-App = {
+const App = {
     contracts: {},
     loading: false,
     account: '',
@@ -10,7 +10,7 @@ App = {
         await App.loadContract();
         await App.render();
     },
-   
+
     loadWeb3: async () => {
         if (window.ethereum) {
             window.web3 = new Web3(window.ethereum);
@@ -34,7 +34,7 @@ App = {
     loadContract: async () => {
         const lifeCoin = await $.getJSON('LifeCoin.json');
         App.contracts.LifeCoin = TruffleContract(lifeCoin);
-        App.contracts.LifeCoin.setProvider(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
+        App.contracts.LifeCoin.setProvider(window.ethereum);
         App.lifeCoinContract = await App.contracts.LifeCoin.deployed();
     },
 
@@ -76,13 +76,56 @@ App = {
         const amount = $('#amount').val();
         await App.lifeCoinContract.transfer(recipient, amount, { from: App.account });
         window.location.reload();
+    },
+
+    login: async () => {
+        const username = $('#username').val();
+        const password = $('#password').val();
+
+        try {
+            console.log("hello");
+            const response = await $.ajax({
+                url: 'http://localhost:5000/api/auth/login',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ username, password })
+            });
+
+            localStorage.setItem('token', response.token);
+            $('#login').hide();
+            $('#app').show();
+            App.load();
+        } catch (error) {
+            alert('Invalid credentials');
+        }
+    },
+    
+
+    logout: () => {
+        localStorage.removeItem('token');
+        $('#app').hide();
+        $('#login').show();
+    },
+
+    checkAuth: () => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            $('#login').hide();
+            $('#app').show();
+            App.load();
+        } else {
+            $('#login').show();
+            $('#app').hide();
+        }
     }
-}
+};
 
 $(() => {
     $(window).load(() => {
-        App.load();
+        App.checkAuth();
+        $('#loginButton').click(App.login);
+        $('#logoutButton').click(App.logout);
         $('#mintButton').click(App.mintLifeCoin);
         $('#transferButton').click(App.transferLifeCoin);
-    })
-})
+    });
+});
