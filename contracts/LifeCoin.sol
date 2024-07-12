@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: MIT
 
+import "./Users.sol";
 
 contract LifeCoin {
+    using Users for Users.User;
+    Users.User private user;
     string public name = "LifeCoin";
     string public symbol = "LC";
     mapping(address => uint256) public balances;

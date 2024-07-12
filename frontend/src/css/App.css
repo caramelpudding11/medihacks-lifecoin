@@ -1,0 +1,56 @@
+.main-body {
+  margin-top: 30px;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: calc(100vh - 258px);
+}
+
+.app {
+  margin-top: 2rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  padding: 2rem;
+  background: #f7f7f7;
+  border-radius: 6px;
+}
+
+.info-section {
+  margin-bottom: 0.5rem;
+}
+
+.account-info, .balance-info {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+.form-section {
+  margin-bottom: 2rem;
+  padding-left: 8%;
+  padding-right: 10%;
+}
+
+.button-group {
+  margin-top: 1rem;
+}
+
+.action-button {
+  margin: 0.5rem;
+}
+
+.success-message {
+  color: green;
+}
+
+.error-message {
+  color: red;
+}
+
+.app-bar {
+  background-color: #2D323F;
+  color: white;
+}
+
+.title {
+  flex-grow: 2;
+}
