@@ -10,12 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import TwitterIcon from '@material-ui/icons/Twitter';
 import Divider from '@material-ui/core/Divider';
 
-import { USER_TYPES } from "./enum/UsersEnum";
 
 import "../css/NewUser.css";
 
@@ -32,6 +28,7 @@ const Register = ({drizzle, drizzleState, isAuthenticated}) => {
 
     return (
         <div className="new-user-body">
+            <h1><center>Welcome to the LifeCoin Patient Portal</center></h1>
             <Backdrop open className="backdrop-design">
                 <Paper elevation={0} className="new-user-paper">
                     <center>
@@ -45,12 +42,12 @@ const Register = ({drizzle, drizzleState, isAuthenticated}) => {
                             spacing={2}
                         >
                             <Grid item xs={12}>
-                                <Tooltip arrow title="Create batches of various products." placement="right">
+                                <Tooltip arrow title="" placement="right">
                                     <Button style={{ width: 200 }}
                                         variant="contained"
                                         color="primary"
                                         className="nf-button"
-                                        onClick={() => navigate("/confirm-registration", {
+                                        onClick={() => navigate("/registration-success", {
                                             
                                         })}
                                     >
@@ -60,11 +57,9 @@ const Register = ({drizzle, drizzleState, isAuthenticated}) => {
                             </Grid>
                             
                         </Grid>
-                        <Divider style={{ marginBottom: 20 }} />
+                        
                             <br/>
-                            Powered by <Link className="ModalLink" href="https://mui.com/" target="_blank" >material-ui</Link> and 
-                            <Link className="ModalLink" href="https://reactjs.org/" target="_blank" 
-                            > {" "}React</Link> &copy; {new Date().getFullYear()} 
+                            
                     </center>
                 </Paper>
             </Backdrop>

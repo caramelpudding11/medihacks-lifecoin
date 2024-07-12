@@ -1,0 +1,32 @@
+{
+    "0xD857d5b8958b3627a0245c20A72B7E1458054364": {
+      "recipients": [
+        {
+          "name": "Alice",
+          "address": "0xaad45dfB1FD521C97A02fC55864042FFc04C21F8",
+          "role": "Police"
+        },
+        {
+          "name": "Bob",
+          "address": "0xf7eE9E802814EafF53B908AEb0D369095077A3F4",
+          "role": "CPR Performer"
+        }
+      ]
+    },
+    
+    "0xC8E2e6D0E1C8c1f155b980083242E094b09489Cf": {
+      "recipients": [
+        {
+          "name": "Charlie",
+          "address": "0x1dc68e7cB52C81137882b2c2772922588eC23278",
+          "role": "Blood Donor"
+        },
+        {
+          "name": "Dave",
+          "address": "0xfE6Efac19692A17056b4AA83ecB8e836107AF774",
+          "role": "911 Call Operator"
+        }
+      ]
+    }
+  }
+  
