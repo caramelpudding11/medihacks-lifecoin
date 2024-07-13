@@ -29,7 +29,7 @@ const RegistrationSuccess = ({isAuthenticated}) => {
     //Sends out registration status to the redirected home page.  
     useEffect(() => {
         setTimeout(() => {
-        navigate('/', {
+        navigate('/home', {
             state: {
                 auth: true,
             }
@@ -47,7 +47,7 @@ const RegistrationSuccess = ({isAuthenticated}) => {
                         <CheckCircleOutlineOutlinedIcon style = {{ paddingTop: 40, fontSize: 200, color: "#2D323F"}} 
                             aria-label="success tick" />
                         <p style={{ paddingBottom: "0" }}>Redirecting to home page.</p>
-                        <p style={{ fontSize: 12, paddingTop: 0 }}>Please <Link className="ModalLink" href="/">click here</Link> if you're not redirected automatically.</p>
+                        <p style={{ fontSize: 12, paddingTop: 0 }}>Please <Link className="ModalLink" href="/home">click here</Link> if you're not redirected automatically.</p>
                         <Divider style={{ marginBottom: 20 }} />
                         
                             <br/>

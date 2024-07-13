@@ -6,8 +6,6 @@ import HomeWrapper from "./wrapper/HomeWrapper";
 
 import Register from "./Register";
 import Footer from "./static/Footer";
-import { CircularPageLoader } from "./static/CircularPageLoader";
-import NotFound from "./static/NotFound";
 import RegistrationSuccess from "./static/RegistrationSuccess";
 
 
@@ -41,13 +39,10 @@ export const InitializedContent = ({drizzle, drizzleState}) => {
             <Router>
                 
                 <div>
-                    <Routes>
-                        {/* Registered users are redirected to the home page, un-registered users go to the register/sign-up page. */}
-                    
-                        <Route exact path="/register" element={<Register drizzle={drizzle} drizzleState={drizzleState} isAuthenticated={isAuth} />} /> 
+                    <Routes>    
+                        <Route exact path="/" element={<Register drizzle={drizzle} drizzleState={drizzleState} isAuthenticated={isAuth} />} /> 
                         <Route exact path="/registration-success" element={<RegistrationSuccess isAuthenticated={isAuth} />} />   
-                        <Route exact path="/" element={<HomeWrapper drizzle={drizzle} drizzleState={drizzleState} isAuthenticated={isAuth} userType={userType} updateAuth={updateIsAuth} updateUserType={updateUserType} />} /> 
-                        <Route path="*" element={<NotFound />} />
+                        <Route exact path="/home" element={<HomeWrapper drizzle={drizzle} drizzleState={drizzleState} isAuthenticated={isAuth} userType={userType} updateAuth={updateIsAuth} updateUserType={updateUserType} />} /> 
                     </Routes>
                 </div>
                 <Footer isAuthenticated={isAuth} />

@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Navigate } from "react-router-dom";
-import { Button, TextField, Paper, CircularProgress, AppBar, Toolbar, IconButton, MenuItem, Menu, Avatar } from '@material-ui/core';
+import { Button, TextField, Paper, CircularProgress, AppBar, Toolbar, IconButton, MenuItem, Menu, Avatar, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import SendIcon from '@material-ui/icons/Send';
 import db from '../db.json'; // Import the mock database
 
 import "../css/App.css";
@@ -21,11 +23,14 @@ export default class Home extends React.Component {
         mintLoading: false,
         userRecipients: [], // Store recipients for the current user
         profileAnchorEl: null, // Anchor for profile menu
+        transactions: [], // Store transaction details
+        viewTransactions: false // Toggle between transaction view and send view
     };
 
     componentDidMount() {
         this.fetchBalance();
         this.loadRecipients();
+        this.loadTransactions();
     }
 
     fetchBalance = async () => {
@@ -40,6 +45,13 @@ export default class Home extends React.Component {
         const userAddress = drizzleState.accounts[0];
         const userRecipients = db[userAddress]?.recipients || [];
         this.setState({ userRecipients });
+    }
+
+    loadTransactions = () => {
+        const { drizzleState } = this.props;
+        const userAddress = drizzleState.accounts[0];
+        const transactions = JSON.parse(localStorage.getItem(userAddress + '_transactions')) || [];
+        this.setState({ transactions });
     }
 
     handleInputChange = (event) => {
@@ -63,6 +75,16 @@ export default class Home extends React.Component {
 
         try {
             await contract.methods.transfer(recipient, amount).send({ from: drizzleState.accounts[0] });
+
+            // Store the transaction details
+            const transaction = {
+                time: new Date().toLocaleString(),
+                to: recipient,
+                amount,
+                name: this.state.recipientName
+            };
+            this.saveTransaction(transaction);
+
             this.setState({ transactionSuccess: true });
             this.fetchBalance();
         } catch (error) {
@@ -89,6 +111,14 @@ export default class Home extends React.Component {
         }
     }
 
+    saveTransaction = (transaction) => {
+        const { drizzleState } = this.props;
+        const userAddress = drizzleState.accounts[0];
+        const updatedTransactions = [...this.state.transactions, transaction];
+        localStorage.setItem(userAddress + '_transactions', JSON.stringify(updatedTransactions));
+        this.setState({ transactions: updatedTransactions });
+    }
+
     handleLogout = () => {
         this.setState({ isAuthenticated: false });
     }
@@ -99,6 +129,10 @@ export default class Home extends React.Component {
 
     handleProfileClose = () => {
         this.setState({ profileAnchorEl: null });
+    };
+
+    toggleTransactionView = () => {
+        this.setState((prevState) => ({ viewTransactions: !prevState.viewTransactions }));
     };
 
     render() {
@@ -115,6 +149,13 @@ export default class Home extends React.Component {
                 <AppBar position="static" className="app-bar">
                     <Toolbar>
                         <div className="title"><h1><center>LifeCoin Wallet</center></h1></div>
+                        <IconButton
+                            edge="end"
+                            color="inherit"
+                            onClick={this.toggleTransactionView}
+                        >
+                            {this.state.viewTransactions ? <SendIcon /> : <ReceiptIcon />}
+                        </IconButton>
                         <IconButton
                             edge="end"
                             color="inherit"
@@ -159,71 +200,99 @@ export default class Home extends React.Component {
                     </Toolbar>
                 </AppBar>
                 <Paper className="app" elevation={3}>
-                    <div className="info-section">
-                        <h1>Transfer LifeCoins</h1>
-                    </div>
-                    <div className="form-section">
-                        <TextField
-                            select
-                            label="Recipient Name"
-                            name="recipientName"
-                            value={this.state.recipientName}
-                            onChange={this.handleInputChange}
-                            fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            InputLabelProps={{ shrink: true }}
-                        >
-                            {this.state.userRecipients.map(recipient => (
-                                <MenuItem key={recipient.name} value={recipient.name}>
-                                    {recipient.name} ({recipient.role})
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                        <TextField
-                            label="Recipient Address"
-                            name="recipient"
-                            value={this.state.recipient}
-                            fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            disabled
-                            InputLabelProps={{ shrink: true }}
-                        />
-                        <TextField
-                            label="Amount"
-                            name="amount"
-                            type="number"
-                            value={this.state.amount}
-                            onChange={this.handleInputChange}
-                            fullWidth
-                            margin="normal"
-                            variant="outlined"
-                            InputLabelProps={{ shrink: true }}
-                        />
-                        <div className="button-group">
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={this.transferLifeCoins}
-                                disabled={this.state.loading}
-                                className="action-button"
-                            >
-                                {this.state.loading ? <CircularProgress size={24} /> : 'Send LifeCoins'}
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="secondary"
-                                onClick={this.mintLifeCoins}
-                                disabled={this.state.mintLoading}
-                                className="action-button"
-                            >
-                                {this.state.mintLoading ? <CircularProgress size={24} /> : 'Mint 100 LifeCoins'}
-                            </Button>
+                    {this.state.viewTransactions ? (
+                        <div className="transaction-section">
+                            <h1>Recent Transactions</h1>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Time</TableCell>
+                                        <TableCell>To</TableCell>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell>Amount</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {this.state.transactions.map((transaction, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{transaction.time}</TableCell>
+                                            <TableCell>{transaction.to}</TableCell>
+                                            <TableCell>{transaction.name}</TableCell>
+                                            <TableCell>{transaction.amount}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
                         </div>
-                        {this.state.transactionSuccess && <p className="success-message">Transaction successful!</p>}
-                        {this.state.transactionSuccess === false && <p className="error-message">Transaction failed: {this.state.error}</p>}
-                    </div>
+                    ) : (
+                        <>
+                            <div className="info-section">
+                                <h1>Transfer LifeCoins</h1>
+                            </div>
+                            <div className="form-section">
+                                <TextField
+                                    select
+                                    label="Recipient Name"
+                                    name="recipientName"
+                                    value={this.state.recipientName}
+                                    onChange={this.handleInputChange}
+                                    fullWidth
+                                    margin="normal"
+                                    variant="outlined"
+                                    InputLabelProps={{ shrink: true }}
+                                >
+                                    {this.state.userRecipients.map(recipient => (
+                                        <MenuItem key={recipient.name} value={recipient.name}>
+                                            {recipient.name} ({recipient.role})
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                                <TextField
+                                    label="Recipient Address"
+                                    name="recipient"
+                                    value={this.state.recipient}
+                                    fullWidth
+                                    margin="normal"
+                                    variant="outlined"
+                                    disabled
+                                    InputLabelProps={{ shrink: true }}
+                                />
+                                <TextField
+                                    label="Amount"
+                                    name="amount"
+                                    type="number"
+                                    value={this.state.amount}
+                                    onChange={this.handleInputChange}
+                                    fullWidth
+                                    margin="normal"
+                                    variant="outlined"
+                                    InputLabelProps={{ shrink: true }}
+                                />
+                                <div className="button-group">
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={this.transferLifeCoins}
+                                        disabled={this.state.loading}
+                                        className="action-button"
+                                    >
+                                        {this.state.loading ? <CircularProgress size={24} /> : 'Send LifeCoins'}
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={this.mintLifeCoins}
+                                        disabled={this.state.mintLoading}
+                                        className="action-button"
+                                    >
+                                        {this.state.mintLoading ? <CircularProgress size={24} /> : 'Mint 100 LifeCoins'}
+                                    </Button>
+                                </div>
+                                {this.state.transactionSuccess && <p className="success-message">Transaction successful!</p>}
+                                {this.state.transactionSuccess === false && <p className="error-message">Transaction failed: {this.state.error}</p>}
+                            </div>
+                        </>
+                    )}
                 </Paper>
             </div>
         );
