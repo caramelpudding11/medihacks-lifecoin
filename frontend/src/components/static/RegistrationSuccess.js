@@ -10,12 +10,7 @@ import Divider from '@material-ui/core/Divider';
 
 import "../../css/NewUser.css";
 
-/**
- * Renders upon successful registration. 
- * Redirects to the home page after delay.
- * 
- * @author syuki
- */
+
 const RegistrationSuccess = ({isAuthenticated}) => {
 
     const navigate = useNavigate();
@@ -25,8 +20,7 @@ const RegistrationSuccess = ({isAuthenticated}) => {
         navigate('/home');
         }
     }, []);
-
-    //Sends out registration status to the redirected home page.  
+ 
     useEffect(() => {
         setTimeout(() => {
         navigate('/home', {

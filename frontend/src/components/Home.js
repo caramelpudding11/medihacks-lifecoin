@@ -5,7 +5,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ReceiptIcon from '@material-ui/icons/Receipt';
 import SendIcon from '@material-ui/icons/Send';
-import db from '../db.json'; // Import the mock database
+import db from '../db.json'; 
 
 import "../css/App.css";
 import "../css/Profile.css";
@@ -24,13 +24,15 @@ export default class Home extends React.Component {
         userRecipients: [], // Store recipients for the current user
         profileAnchorEl: null, // Anchor for profile menu
         transactions: [], // Store transaction details
-        viewTransactions: false // Toggle between transaction view and send view
+        viewTransactions: false, // Toggle between transaction view and send view
+        hasRedeemed: false // Track if user has redeemed LifeCoins
     };
 
     componentDidMount() {
         this.fetchBalance();
         this.loadRecipients();
         this.loadTransactions();
+        this.checkRedemptionStatus();
     }
 
     fetchBalance = async () => {
@@ -52,6 +54,13 @@ export default class Home extends React.Component {
         const userAddress = drizzleState.accounts[0];
         const transactions = JSON.parse(localStorage.getItem(userAddress + '_transactions')) || [];
         this.setState({ transactions });
+    }
+
+    checkRedemptionStatus = () => {
+        const { drizzleState } = this.props;
+        const userAddress = drizzleState.accounts[0];
+        const hasRedeemed = localStorage.getItem(userAddress + '_hasRedeemed') === 'true';
+        this.setState({ hasRedeemed });
     }
 
     handleInputChange = (event) => {
@@ -86,6 +95,9 @@ export default class Home extends React.Component {
             this.saveTransaction(transaction);
 
             this.setState({ transactionSuccess: true });
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000); 
             this.fetchBalance();
         } catch (error) {
             this.setState({ transactionSuccess: false, error: error.message });
@@ -102,7 +114,11 @@ export default class Home extends React.Component {
 
         try {
             await contract.methods.mint(drizzleState.accounts[0], 100).send({ from: drizzleState.accounts[0] });
-            this.setState({ transactionSuccess: true });
+            this.setState({ transactionSuccess: true, hasRedeemed: true });
+
+            // Update the redemption status in localStorage
+            localStorage.setItem(drizzleState.accounts[0] + '_hasRedeemed', 'true');
+
             this.fetchBalance();
         } catch (error) {
             this.setState({ transactionSuccess: false, error: error.message });
@@ -278,15 +294,17 @@ export default class Home extends React.Component {
                                     >
                                         {this.state.loading ? <CircularProgress size={24} /> : 'Send LifeCoins'}
                                     </Button>
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={this.mintLifeCoins}
-                                        disabled={this.state.mintLoading}
-                                        className="action-button"
-                                    >
-                                        {this.state.mintLoading ? <CircularProgress size={24} /> : 'Mint 100 LifeCoins'}
-                                    </Button>
+                                    {!this.state.hasRedeemed && (
+                                        <Button
+                                            variant="contained"
+                                            color="secondary"
+                                            onClick={this.mintLifeCoins}
+                                            disabled={this.state.mintLoading}
+                                            className="action-button"
+                                        >
+                                            {this.state.mintLoading ? <CircularProgress size={24} /> : 'Redeem 100 LifeCoins'}
+                                        </Button>
+                                    )}
                                 </div>
                                 {this.state.transactionSuccess && <p className="success-message">Transaction successful!</p>}
                                 {this.state.transactionSuccess === false && <p className="error-message">Transaction failed: {this.state.error}</p>}

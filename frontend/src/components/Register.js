@@ -6,11 +6,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Paper from "@material-ui/core/Paper";
 import Backdrop from '@material-ui/core/Backdrop';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
 
 
 import "../css/NewUser.css";

@@ -10,12 +10,7 @@ import "./css/App.css";
 
 const drizzle = new Drizzle(drizzleOptions);
 
-/**
- * The main app component. Tha main paths and components are called from here.
- * Drizzle initialization state is checked here and is passed down to the child components when required.
- * 
- * @author syuki
- */
+
 const App = () => {
 
     return (
