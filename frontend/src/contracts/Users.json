@@ -1,47 +1,47 @@
 {
   "contractName": "Users",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"Stores user addresses for different types of users.\",\"methods\":{},\"title\":\"Users\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Users.sol\":\"Users\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Users.sol\":{\"keccak256\":\"0x5252f8a3a755ccef7834bfb28ee902540804c5cb7f62949a2da40473ff505950\",\"urls\":[\"bzz-raw://f480fd70bf2610bb2de88502bfed7367bcbea93a7bf3517ff35c8cb61aaad118\",\"dweb:/ipfs/QmYFT2xrNzSjXeBJHr9BWufKrw4G8hMMTdT1YZiU98CX8q\"]}},\"version\":1}",
-  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820eddc1616e2344cd591ef0ba2e55848f240ff9a8b9723181c1b58abc764fc517164736f6c63430005100032",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820eddc1616e2344cd591ef0ba2e55848f240ff9a8b9723181c1b58abc764fc517164736f6c63430005100032",
-  "sourceMap": "86:91:1:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
-  "deployedSourceMap": "86:91:1:-;;;;;;;;",
-  "source": "\n\n/**\n * @title Users\n * @dev Stores user addresses for different types of users.\n */\nlibrary Users {\n\n    struct User {\n        mapping(address => bool) userAddresses;\n    }\n\n}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Users.sol\":\"Users\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Users.sol\":{\"keccak256\":\"0xf5cf662b6cea6d02c0f7bddd3a0c47b8101e5f786ef85b71e65052208101e695\",\"urls\":[\"bzz-raw://190bfed2747ed7083e4e2e37db46ea796896f74f06b39950305f9ff998af9ed2\",\"dweb:/ipfs/QmPSNoXzTjV6j31S6rA3BFpwMVeyTDRsvb9kKCo9WDL2HN\"]}},\"version\":1}",
+  "bytecode": "0x60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820db881bf194e19cc5399338ba542b31d24d2c41926f7569d07fc5322df8ac381964736f6c63430005100032",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820db881bf194e19cc5399338ba542b31d24d2c41926f7569d07fc5322df8ac381964736f6c63430005100032",
+  "sourceMap": "3:91:1:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
+  "deployedSourceMap": "3:91:1:-;;;;;;;;",
+  "source": "\n\n\nlibrary Users {\n\n    struct User {\n        mapping(address => bool) userAddresses;\n    }\n\n}",
   "sourcePath": "/home/prathiba/medihacks/contracts/Users.sol",
   "ast": {
     "absolutePath": "project:/contracts/Users.sol",
     "exportedSymbols": {
       "Users": [
-        145
+        104
       ]
     },
-    "id": 146,
+    "id": 105,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "baseContracts": [],
         "contractDependencies": [],
         "contractKind": "library",
-        "documentation": "@title Users\n@dev Stores user addresses for different types of users.",
+        "documentation": null,
         "fullyImplemented": true,
-        "id": 145,
+        "id": 104,
         "linearizedBaseContracts": [
-          145
+          104
         ],
         "name": "Users",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "Users.User",
-            "id": 144,
+            "id": 103,
             "members": [
               {
                 "constant": false,
-                "id": 143,
+                "id": 102,
                 "name": "userAddresses",
                 "nodeType": "VariableDeclaration",
-                "scope": 144,
-                "src": "129:38:1",
+                "scope": 103,
+                "src": "46:38:1",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -49,28 +49,28 @@
                   "typeString": "mapping(address => bool)"
                 },
                 "typeName": {
-                  "id": 142,
+                  "id": 101,
                   "keyType": {
-                    "id": 140,
+                    "id": 99,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "137:7:1",
+                    "src": "54:7:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
                   "nodeType": "Mapping",
-                  "src": "129:24:1",
+                  "src": "46:24:1",
                   "typeDescriptions": {
                     "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
                     "typeString": "mapping(address => bool)"
                   },
                   "valueType": {
-                    "id": 141,
+                    "id": 100,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "148:4:1",
+                    "src": "65:4:1",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -83,23 +83,23 @@
             ],
             "name": "User",
             "nodeType": "StructDefinition",
-            "scope": 145,
-            "src": "107:67:1",
+            "scope": 104,
+            "src": "24:67:1",
             "visibility": "public"
           }
         ],
-        "scope": 146,
-        "src": "86:91:1"
+        "scope": 105,
+        "src": "3:91:1"
       }
     ],
-    "src": "86:91:1"
+    "src": "3:91:1"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "project:/contracts/Users.sol",
       "exportedSymbols": {
         "Users": [
-          145
+          104
         ]
       }
     },
@@ -113,20 +113,20 @@
             null
           ],
           "contractKind": "library",
-          "documentation": "@title Users\n@dev Stores user addresses for different types of users.",
+          "documentation": null,
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            145
+            104
           ],
           "name": "Users",
-          "scope": 146
+          "scope": 105
         },
         "children": [
           {
             "attributes": {
               "canonicalName": "Users.User",
               "name": "User",
-              "scope": 145,
+              "scope": 104,
               "visibility": "public"
             },
             "children": [
@@ -134,7 +134,7 @@
                 "attributes": {
                   "constant": false,
                   "name": "userAddresses",
-                  "scope": 144,
+                  "scope": 103,
                   "stateVariable": false,
                   "storageLocation": "default",
                   "type": "mapping(address => bool)",
@@ -152,43 +152,43 @@
                           "name": "address",
                           "type": "address"
                         },
-                        "id": 140,
+                        "id": 99,
                         "name": "ElementaryTypeName",
-                        "src": "137:7:1"
+                        "src": "54:7:1"
                       },
                       {
                         "attributes": {
                           "name": "bool",
                           "type": "bool"
                         },
-                        "id": 141,
+                        "id": 100,
                         "name": "ElementaryTypeName",
-                        "src": "148:4:1"
+                        "src": "65:4:1"
                       }
                     ],
-                    "id": 142,
+                    "id": 101,
                     "name": "Mapping",
-                    "src": "129:24:1"
+                    "src": "46:24:1"
                   }
                 ],
-                "id": 143,
+                "id": 102,
                 "name": "VariableDeclaration",
-                "src": "129:38:1"
+                "src": "46:38:1"
               }
             ],
-            "id": 144,
+            "id": 103,
             "name": "StructDefinition",
-            "src": "107:67:1"
+            "src": "24:67:1"
           }
         ],
-        "id": 145,
+        "id": 104,
         "name": "ContractDefinition",
-        "src": "86:91:1"
+        "src": "3:91:1"
       }
     ],
-    "id": 146,
+    "id": 105,
     "name": "SourceUnit",
-    "src": "86:91:1"
+    "src": "3:91:1"
   },
   "compiler": {
     "name": "solc",
@@ -196,11 +196,9 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-07-12T13:13:59.292Z",
+  "updatedAt": "2024-07-14T18:17:00.432Z",
   "devdoc": {
-    "details": "Stores user addresses for different types of users.",
-    "methods": {},
-    "title": "Users"
+    "methods": {}
   },
   "userdoc": {
     "methods": {}
