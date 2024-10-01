@@ -15,3 +15,6 @@
 9. Change the keys and addresses in `db.json` to account addresses from your local blockchain environment from Ganache.
 ### Frontend
 10. In the `frontend` directory, run `npm start` to start the application.
+
+#### Video Demo
+https://www.youtube.com/watch?v=hrgLg92WvNQ&t=2s
